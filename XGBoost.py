@@ -16,10 +16,15 @@ def analysis(test, predict):
     y_grid = np.arange(min(test), max(test), 0.01)  # this step required because data is feature scaled.
     y_grid = y_grid.reshape((len(y_grid), 1))
     plt.scatter(y_test, y_pr_SVR, color='red')
-    # plt.plot(y_grid, SVR_regressor.predict(y_grid), color='blue')
-    plt.title('实际年龄与预测年龄关系 ')
-    plt.xlabel('实际年龄')
-    plt.ylabel('预测年龄（脑龄）')
+    linear_regression_plot = LinearRegression()
+    linear_regression_plot.fit(test, predict)
+    plt.plot(y_grid, linear_regression_plot.predict(y_grid), color='blue')
+    plt.plot(y_grid, y_grid, color='black')
+    plt.title('Comparison of real age and estimation')
+    plt.xlabel('Age')
+    plt.ylabel('Age Estimation（Brain Age）')
+    plt.annotate('MAE = {}'.format(mean_absolute_error(test, predict)), (1, 1))
+    plt.annotate('r^2 = {}'.format(r2_score(test, predict)), (1, 1))
     plt.show()
     # sns.lmplot(test, predict)
 
@@ -35,7 +40,7 @@ def analysis(test, predict):
     print("Coefficient of determination: %.2f" % r2_score(test, predict))
 
 
-X_train, X_test, y_train, y_test = BAE.io.read_source_relative()
+X_train, X_test, y_train, y_test = BAE.io.read_source_relative_site()
 
 sc_X = StandardScaler()
 sc_y = StandardScaler()
@@ -64,4 +69,6 @@ y_pr_xgb = xgb.predict(X_test)
 y_pr_SVR_sc = SVR_regressor.predict(X_test_sc)
 y_pr_SVR = sc_y.inverse_transform(y_pr_SVR_sc[:, numpy.newaxis])
 
+analysis(y_test, y_pr_li)
 analysis(y_test, y_pr_SVR)
+analysis(y_test, y_pr_xgb)
