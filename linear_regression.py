@@ -2,8 +2,6 @@
 # Date: 3/14/2022
 # Author: Han
 
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, median_absolute_error
