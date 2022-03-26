@@ -38,6 +38,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\PAD.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\volume_sum_icv_site.csv">
           <value>
             <Attribute>
