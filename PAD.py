@@ -5,22 +5,22 @@ from sklearn.linear_model import LinearRegression
 import xgboost as xgb
 from sklearn.svm import SVR
 
-data1 = pd.read_csv(r"C:\Users\Han\PycharmProjects\MRI_Brain_Age\AD\sMCI_1styear.csv")
-data2 = pd.read_csv(r"C:\Users\Han\PycharmProjects\MRI_Brain_Age\AD\sMCI_2ndyear.csv")
-data3 = pd.read_csv(r"C:\Users\Han\PycharmProjects\MRI_Brain_Age\AD\sMCI_3rdyear.csv")
-data4 = pd.read_csv(r"C:\Users\Han\PycharmProjects\MRI_Brain_Age\AD\pMCI_2yearsbefore.csv")
+data1 = pd.read_csv(r"\AD\sMCI_1styear.csv")
+data2 = pd.read_csv(r"\AD\sMCI_2ndyear.csv")
+data3 = pd.read_csv(r"\AD\sMCI_3rdyear.csv")
+data4 = pd.read_csv(r"\AD\pMCI_2yearsbefore.csv")
 data5 = pd.read_csv(r"C:\Users\Han\PycharmProjects\MRI_Brain_Age\AD\pMCI_1yearsbefore.csv")
 data6 = pd.read_csv(r"C:\Users\Han\PycharmProjects\MRI_Brain_Age\AD\pMCI_0yearsbefore.csv")
 
-data_ls = [data1,data2,data3,data4,data5,data6]
+data_ls = [data1, data2, data3, data4, data5, data6]
 
 for data in data_ls:
-    X_test = data.drop(columns=['name','age','sex','WM','GM','CSF'])
+    X_test = data.drop(columns=['name', 'age', 'sex', 'WM', 'GM', 'CSF'])
     y_test = data['age']
-#     y_pred = np.zeros(len(y_test))
+    #     y_pred = np.zeros(len(y_test))
     model = joblib.load(r"SVR-3")
     y_pred = model.predict(X_test)
-#     y_pred = y_pred + y_pre
+    #     y_pred = y_pred + y_pre
     data['bias'] = y_pred - y_test
 
 sMCI1 = data_ls[0]['bias']
